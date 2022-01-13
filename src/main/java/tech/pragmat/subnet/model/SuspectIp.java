@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,9 +21,13 @@ import javax.persistence.Table;
 public class SuspectIp {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    private int Ip;
+    @Column(name = "upper_bound")
+    private int upperbound;
+
+    @Column(name = "lower_bound")
+    private int lowerBound;
 
 }
