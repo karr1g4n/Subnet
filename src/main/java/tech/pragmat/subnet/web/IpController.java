@@ -23,8 +23,8 @@ public class IpController {
     }
 
     @PostMapping()
-    public SuspectIp add(@RequestParam String startLimit, String endLimit) throws UnknownHostException {
-        return ipService.addIp(startLimit, endLimit);
+    public SuspectIp add(@RequestParam String upperBound, String lowerBound) throws UnknownHostException {
+        return ipService.addIp(upperBound, lowerBound);
     }
 
     @GetMapping()
