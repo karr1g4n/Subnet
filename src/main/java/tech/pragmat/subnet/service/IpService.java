@@ -1,7 +1,7 @@
 package tech.pragmat.subnet.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tech.pragmat.subnet.feign.CountryRegionClient;
 import tech.pragmat.subnet.model.SuspectIp;
 import tech.pragmat.subnet.repository.IpRepository;
 
@@ -14,29 +14,32 @@ public class IpService {
 
     private final IpRepository ipRepository;
 
-    @Autowired
-    public IpService(IpRepository ipRepository) {
+    private final CountryRegionClient countryRegionClient;
+
+    public IpService(IpRepository ipRepository, CountryRegionClient countryRegionClient) {
         this.ipRepository = ipRepository;
+        this.countryRegionClient = countryRegionClient;
     }
 
-    public SuspectIp addIp(String ip) throws UnknownHostException {
-        int Ip = convertFromIpToInt(ip);
-        return ipRepository.save(new SuspectIp(1,Ip));
+    public SuspectIp addIp(String upperBound, String lowerBound) throws UnknownHostException {
+        return ipRepository.save(new SuspectIp(1, convertFromIpToInt(upperBound), convertFromIpToInt(lowerBound)));
     }
 
-    public String getByIp(String Ip) throws UnknownHostException {
-       convertFromIntToIp(convertFromIpToInt(Ip));
-        return null;
+    public SuspectIp get(String ip) throws UnknownHostException {
+        return ipRepository.getSuspectIpBy(convertFromIpToInt(ip));
+    }
+
+    public String getRegion(String ip) throws UnknownHostException {
+        if (get(ip) == null) {
+            return countryRegionClient.getCountRegion(ip);
+        } else {
+            return "your Ip is blocked";
+        }
     }
 
     private int convertFromIpToInt(String ip) throws UnknownHostException {
         InetAddress i = InetAddress.getByName(ip);
         return ByteBuffer.wrap(i.getAddress()).getInt();
-    }
-
-    private String  convertFromIntToIp(int ip) throws UnknownHostException {
-        InetAddress i= InetAddress.getByName(String.valueOf(ip));
-        return  i.getHostAddress();
     }
 
 }
