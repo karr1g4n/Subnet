@@ -23,6 +23,11 @@ public class SuspectIp {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @Column(name = "upper_ip")
+    private String upperId;
+
+    @Column(name = "lower_ip")
+    private String lowerId;
 
     @Column(name = "upper_bound")
     private int upperbound;

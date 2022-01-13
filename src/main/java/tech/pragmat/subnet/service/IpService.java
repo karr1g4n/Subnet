@@ -20,7 +20,7 @@ public class IpService {
     }
 
     public SuspectIp addIp(String upperBound, String lowerBound) throws UnknownHostException {
-        return ipRepository.save(new SuspectIp(1, convertFromIpToInt(upperBound), convertFromIpToInt(lowerBound)));
+        return ipRepository.save(new SuspectIp(1,upperBound,lowerBound, convertFromIpToInt(upperBound), convertFromIpToInt(lowerBound)));
     }
 
     public SuspectIp get(String ip) throws UnknownHostException {
@@ -31,17 +31,16 @@ public class IpService {
         if (get(ip) == null) {
             return countryRegionClient.getCountRegion(ip);
         } else {
-            return "your Ip is blocked";
+            return "Ip is blocked";
         }
     }
 
-//    private int convertFromIpToInt(String ip) throws UnknownHostException {
-//        InetAddress i = InetAddress.getByName(ip);
-//        return ByteBuffer.wrap(i.getAddress()).getInt();
-//    }
+    //    private int convertFromIpToInt(String ip) throws UnknownHostException {
+    //        InetAddress i = InetAddress.getByName(ip);
+    //        return ByteBuffer.wrap(i.getAddress()).getInt();
+    //    }
 
-
-    private int convertFromIpToInt (String ip){
+    private int convertFromIpToInt(String ip) {
         String[] addArray = ip.split("\\.");
         int num = 0;
         for (int i = 0; i < addArray.length; i++) {
