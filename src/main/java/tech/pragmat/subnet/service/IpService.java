@@ -5,9 +5,7 @@ import tech.pragmat.subnet.feign.CountryRegionClient;
 import tech.pragmat.subnet.model.SuspectIp;
 import tech.pragmat.subnet.repository.IpRepository;
 
-import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.nio.ByteBuffer;
 
 @Service
 public class IpService {
@@ -26,7 +24,7 @@ public class IpService {
     }
 
     public SuspectIp get(String ip) throws UnknownHostException {
-        return ipRepository.getSuspectIpBy(convertFromIpToInt(ip));
+        return ipRepository.getSuspectIp(convertFromIpToInt(ip));
     }
 
     public String getRegion(String ip) throws UnknownHostException {
@@ -37,9 +35,19 @@ public class IpService {
         }
     }
 
-    private int convertFromIpToInt(String ip) throws UnknownHostException {
-        InetAddress i = InetAddress.getByName(ip);
-        return ByteBuffer.wrap(i.getAddress()).getInt();
-    }
+//    private int convertFromIpToInt(String ip) throws UnknownHostException {
+//        InetAddress i = InetAddress.getByName(ip);
+//        return ByteBuffer.wrap(i.getAddress()).getInt();
+//    }
 
+
+    private int convertFromIpToInt (String ip){
+        String[] addArray = ip.split("\\.");
+        int num = 0;
+        for (int i = 0; i < addArray.length; i++) {
+            int power = 3 - i;
+            num += ((Integer.parseInt(addArray[i]) % 256 * Math.pow(256, power)));
+        }
+        return num;
+    }
 }

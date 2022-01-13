@@ -9,5 +9,5 @@ import tech.pragmat.subnet.model.SuspectIp;
 public interface IpRepository extends JpaRepository<SuspectIp, Integer> {
 
     @Query(value = "select * from  black_list u where ?1>=u.upper_bound  and ?1<=u.lower_bound", nativeQuery = true)
-    SuspectIp getSuspectIpBy(Integer id);
+    SuspectIp getSuspectIp(Integer id);
 }
