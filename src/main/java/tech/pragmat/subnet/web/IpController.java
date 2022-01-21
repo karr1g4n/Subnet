@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 import tech.pragmat.subnet.model.SuspectIp;
 import tech.pragmat.subnet.service.IpService;
 
-import java.net.UnknownHostException;
-
 @RestController
 @RequestMapping("/ip")
 public class IpController {
@@ -23,12 +21,12 @@ public class IpController {
     }
 
     @PostMapping()
-    public SuspectIp add(@RequestParam String upperBound, String lowerBound) throws UnknownHostException {
+    public SuspectIp add(@RequestParam String upperBound, String lowerBound) {
         return ipService.addIp(upperBound, lowerBound);
     }
 
     @GetMapping()
-    public String getRegion(@RequestParam String ip) throws UnknownHostException {
+    public String getRegion(@RequestParam String ip) {
         return ipService.getRegion(ip);
     }
 }
