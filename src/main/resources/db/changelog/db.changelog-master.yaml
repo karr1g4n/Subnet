@@ -1,0 +1,35 @@
+databaseChangeLog:
+  - logicalFilePath: db/changelog/db.changelog-lesson1.yaml
+  - changeSet:
+      id: 1
+      author: create_table
+      changes:
+        - createTable:
+            tableName: black_list
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: upper_ip
+                  type: varchar(50)
+                  constraints:
+                    unique: false
+                    nullable: false
+              - column:
+                  name: lower_ip
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: upper_bound
+                  type: int
+              - column:
+                  name: lower_bound
+                  type: int
+
+
