@@ -3,15 +3,15 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
-    <changeSet author="Artem" id="create_table">
+    <changeSet author="Artem1" id="create">
         <createTable tableName="black_list">
-            <column autoIncrement="true" name="id" type="INTEGER">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="actor_pkey"/>
+            <column autoIncrement="true" name="id" type="SERIAL">
+                <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="upper_ip" type="VARCHAR(255)"/>
             <column name="lower_ip" type="VARCHAR(255)"/>
             <column name="upper_bound" type="INTEGER"/>
-            <column name="lowerBound" type="INTEGER"/>
+            <column name="lower_bound" type="INTEGER"/>
         </createTable>
     </changeSet>
 </databaseChangeLog>
